@@ -1,0 +1,28 @@
+{
+    "name": "fiasco/cloud-api-sdk-php",
+    "description": "PHP SDK For Acquia Cloud API",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "^6.3",
+        "acquia/http-hmac-php": "^4.0",
+        "cebe/php-openapi": "^1.0"
+    },
+    "license": "GPLv3",
+    "authors": [
+        {
+            "name": "Josh Waihi",
+            "email": "josh.waihi@acquia.com"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+          "AcquiaCloudApi\\": "src/",
+          "AcquiaCloudApiTests\\": "tests/src/"
+      }
+    },
+    "require-dev": {
+      "phpunit/phpunit": "^8.0",
+      "symfony/yaml": "^4.0"
+    },
+    "bin": ["bin/build_docs"]
+}

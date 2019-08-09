@@ -1,0 +1,53 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Component\Yaml\Yaml;
+
+require 'vendor/autoload.php';
+
+$spec = Yaml::parseFile('acquia-spec.yaml');
+
+$param = function ($value) {
+  // '#/components/parameters/ApplicationUuid'
+  $value = str_replace('#/components/parameters/', '', $value['$ref']);
+  return "'" . $value . "' => " . '$' . $value;
+};
+
+$params = function (array $params) use ($param) {
+  return "[\n\t" . implode(",\n\t", array_map($param, $params)) . "\n]";
+};
+
+$ref = function ($text) {
+  return '#' . str_replace(' ', '-', $text);
+};
+
+print '# Functions' . PHP_EOL;
+
+echo 'Function | Summary' . PHP_EOL;
+echo '-------- | -------' . PHP_EOL;
+foreach ($spec['paths'] as $path => $methods) {
+  foreach ($methods as $method => $operation) {
+    echo '[' . $operation['operationId'] . ']' . '(' . $ref($operation['operationId']) . ') | ' . $operation['summary'] . PHP_EOL;
+  }
+}
+
+echo "\n\n";
+
+foreach ($spec['paths'] as $path => $methods) {
+  foreach ($methods as $method => $operation) {
+    $function = '$response = $client->' . $operation['operationId'] . '(';
+    if (isset($operation['parameters'])) {
+      $function .= $params($operation['parameters']);
+    }
+    $function .= ');';
+
+    print "## {$operation['operationId']}\n\n";
+    print $operation['summary'] . PHP_EOL;
+    print "```php\n";
+    print $function . PHP_EOL;
+    print "```\n\n\n";
+  }
+}
+
+
+ ?>
