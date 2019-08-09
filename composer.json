@@ -7,7 +7,7 @@
         "acquia/http-hmac-php": "^4.0",
         "cebe/php-openapi": "^1.0"
     },
-    "license": "GPLv3",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Josh Waihi",
