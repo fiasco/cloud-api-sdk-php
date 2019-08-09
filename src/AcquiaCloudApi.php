@@ -18,10 +18,10 @@ class AcquiaCloudApi {
 
   protected $operations = [];
 
-  public function __construct($api_key, $secret)
+  public function __construct(string $api_key, string $secret, ?HandlerStack $handler)
   {
 
-    $this->specification = Reader::readFromYaml(__DIR__ . '../' . file_get_contents('acquia-spec.yaml'));
+    $this->specification = Reader::readFromYaml(__DIR__ . '../' . file_get_contents(__DIR__ . '/../acquia-spec.yaml'));
     $this->specification->setReferenceContext(new ReferenceContext($this->specification, self::OPENAPI_SPEC));
     $this->specification->resolveReferences();
 
@@ -46,7 +46,10 @@ class AcquiaCloudApi {
 
     $key = new Key($api_key, $secret);
     $middleware = new HmacAuthMiddleware($key);
-    $handler = HandlerStack::create();
+
+    if (empty($handler)) {
+      $handler = HandlerStack::create();
+    }
     $handler->push($middleware);
     $this->client = new Client([
       'handler' => $handler,
@@ -125,6 +128,11 @@ class AcquiaCloudApi {
   public function getCommands()
   {
     return array_keys($this->operations);
+  }
+
+  public function getClient()
+  {
+    return $this->client;
   }
 }
 
