@@ -18,7 +18,7 @@ class AcquiaCloudApi {
 
   protected $operations = [];
 
-  public function __construct(string $api_key, string $secret, ?HandlerStack $handler)
+  public function __construct(string $api_key, string $secret, HandlerStack $handler = null)
   {
 
     $this->specification = Reader::readFromYaml(__DIR__ . '../' . file_get_contents(__DIR__ . '/../acquia-spec.yaml'));
@@ -44,7 +44,10 @@ class AcquiaCloudApi {
       }
     }
 
-    $key = new Key($api_key, $secret);
+    $this->api_key = $api_key;
+    $this->secret = $secret;
+
+    $key = new Key($this->api_key, $this->secret);
     $middleware = new HmacAuthMiddleware($key);
 
     if (empty($handler)) {
@@ -55,6 +58,19 @@ class AcquiaCloudApi {
       'handler' => $handler,
       'base_uri' => $this->specification->servers[0]->url . '/',
     ]);
+  }
+
+  public function withClient(Client $client)
+  {
+    $key = new Key($this->api_key, $this->secret);
+    $middleware = new HmacAuthMiddleware($key);
+
+    $config = $client->getConfig();
+    $config['handler']->push($middleware);
+    $config['base_uri'] = $this->specification->servers[0]->url . '/';
+
+    $this->client = new Client($config);
+    return $this;
   }
 
   public function __call($method, $args)
