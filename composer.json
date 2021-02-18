@@ -3,9 +3,12 @@
     "description": "PHP SDK For Acquia Cloud API",
     "type": "library",
     "require": {
+        "cebe/php-openapi": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
-        "acquia/http-hmac-php": "^4.0",
-        "cebe/php-openapi": "^1.0"
+        "league/oauth2-client": "^2.4",
+        "php": ">=7.3",
+        "symfony/cache": "^4|^5",
+        "webmozart/path-util": "^2.3"
     },
     "license": "GPL-3.0-or-later",
     "authors": [

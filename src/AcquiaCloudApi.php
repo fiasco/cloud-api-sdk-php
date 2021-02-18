@@ -2,10 +2,8 @@
 
 namespace AcquiaCloudApi;
 
-use GuzzleHttp\Client;
-use Acquia\Hmac\Guzzle\HmacAuthMiddleware;
-use Acquia\Hmac\Key;
-use GuzzleHttp\HandlerStack;
+use AcquiaCloudApi\Connector\Client;
+use AcquiaCloudApi\Connector\Connector;
 use cebe\openapi\Reader;
 use cebe\openapi\ReferenceContext;
 
@@ -18,7 +16,7 @@ class AcquiaCloudApi {
 
   protected $operations = [];
 
-  public function __construct(string $api_key, string $secret, HandlerStack $handler = null)
+  public function __construct(string $api_key, string $secret)
   {
 
     $this->specification = Reader::readFromYaml(__DIR__ . '../' . file_get_contents(__DIR__ . '/../acquia-spec.yaml'));
@@ -44,32 +42,17 @@ class AcquiaCloudApi {
       }
     }
 
-    $this->api_key = $api_key;
-    $this->secret = $secret;
+    $config = [
+        'key' => $api_key,
+        'secret' => $secret,
+    ];
 
-    $key = new Key($this->api_key, $this->secret);
-    $middleware = new HmacAuthMiddleware($key);
-
-    if (empty($handler)) {
-      $handler = HandlerStack::create();
-    }
-    $handler->push($middleware);
-    $this->client = new Client([
-      'handler' => $handler,
-      'base_uri' => $this->specification->servers[0]->url . '/',
-    ]);
+    $connector = new Connector($config);
+    $this->client = Client::factory($connector);
   }
 
   public function withClient(Client $client)
   {
-    $key = new Key($this->api_key, $this->secret);
-    $middleware = new HmacAuthMiddleware($key);
-
-    $config = $client->getConfig();
-    $config['handler']->push($middleware);
-    $config['base_uri'] = $this->specification->servers[0]->url . '/';
-
-    $this->client = new Client($config);
     return $this;
   }
 
@@ -116,29 +99,12 @@ class AcquiaCloudApi {
       $request_options['json'] = $arg[1];
     }
 
-    $response = $this->client->request(
+    $this->client->clearOptions();
+    return $this->client->request(
       $this->operations[$method]->method,
-      substr($path, 1),
+      $path,
       $request_options
     );
-
-    // $schema = $this->operations[$method]
-    //   ->responses[$response->getStatusCode()]
-    //   ->content['application/json']
-    //   ->schema;
-
-    $body = $response->getBody();
-
-    if ($response->getStatusCode() != 200) {
-      $json = json_decode($body, TRUE);
-      throw new ResponseException($response, strtr('error: message', $json['value']));
-    }
-
-    if ($json = json_decode($body, TRUE)) {
-      return $json;
-    }
-
-    return $body;
   }
 
   public function getCommands()
