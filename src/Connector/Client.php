@@ -25,11 +25,6 @@ class Client implements ClientInterface
     protected $connector;
 
     /**
-     * @var array Query strings to be applied to the request.
-     */
-    protected $query = [];
-
-    /**
      * @var array Guzzle options to be applied to the request.
      */
     protected $options = [];
@@ -100,7 +95,6 @@ class Client implements ClientInterface
             $options['headers']['User-Agent'] = $userAgent;
         }
 
-        $options['query'] = $this->query;
         if (!empty($options['query']['filter']) && is_array($options['query']['filter'])) {
             // Default to an OR filter to increase returned responses.
             $options['query']['filter'] = implode(',', $options['query']['filter']);
@@ -129,13 +123,7 @@ class Client implements ClientInterface
      */
     public function makeRequest(string $verb, string $path, array $options = []): ResponseInterface
     {
-        try {
-            $response = $this->connector->sendRequest($verb, $path, $options);
-        } catch (BadResponseException $e) {
-            $response = $e->getResponse();
-        }
-
-        return $response;
+        return $this->connector->sendRequest($verb, $path, $options);
     }
 
     /**
@@ -159,30 +147,6 @@ class Client implements ClientInterface
         }
 
         return $body;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getQuery(): array
-    {
-        return $this->query;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function clearQuery(): void
-    {
-        $this->query = [];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function addQuery($name, $value): void
-    {
-        $this->query = array_merge_recursive($this->query, [$name => $value]);
     }
 
     /**
