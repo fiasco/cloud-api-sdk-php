@@ -25,11 +25,6 @@ class Client implements ClientInterface
     protected $connector;
 
     /**
-     * @var array Guzzle options to be applied to the request.
-     */
-    protected $options = [];
-
-    /**
      * Client constructor.
      *
      * @param ConnectorInterface $connector
@@ -75,9 +70,6 @@ class Client implements ClientInterface
      */
     public function modifyOptions($options = []): array
     {
-        // Combine options set globally e.g. headers with options set by individual API calls e.g. form_params.
-        $options = $this->options + $options;
-
         // This library can be standalone or as a dependency. Dependent libraries may also set their own user agent
         // which will make $options['headers']['User-Agent'] an array.
         // We need to array_unique() the array of User-Agent headers as multiple calls may include multiple of the same header.
@@ -147,29 +139,5 @@ class Client implements ClientInterface
         }
 
         return $body;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getOptions(): array
-    {
-        return $this->options;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function clearOptions(): void
-    {
-        $this->options = [];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function addOption($name, $value): void
-    {
-        $this->options = array_merge_recursive($this->options, [$name => $value]);
     }
 }

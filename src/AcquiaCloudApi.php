@@ -99,7 +99,6 @@ class AcquiaCloudApi {
       $request_options['json'] = $arg[1];
     }
 
-    $this->client->clearOptions();
     return $this->client->request(
       $this->operations[$method]->method,
       $path,
