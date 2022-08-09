@@ -75,7 +75,8 @@ class Connector implements ConnectorInterface
             $directory = sprintf('%s%s%s', Path::getHomeDirectory(), \DIRECTORY_SEPARATOR, '.acquia-php-sdk-v2');
             $cache = new FilesystemAdapter('cache', 0, $directory);
             $accessToken = $cache->get('cloudapi-token', function (ItemInterface $item) {
-                $item->expiresAfter(300);
+                // Changing to expire after 270 seconds, leaving a buffer to avoid race condition.
+                $item->expiresAfter(270);
                 return $this->provider->getAccessToken('client_credentials');
             });
 
