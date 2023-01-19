@@ -10,6 +10,7 @@ Function | Summary
 [postAccountApplicationStar](#postAccountApplicationStar) | Stars an application.
 [postAccountApplicationUnstar](#postAccountApplicationUnstar) | Removes an application from the user's starred list.
 [getAccountDrushAliasesDownload](#getAccountDrushAliasesDownload) | Returns the drush aliases as a compressed archive download.
+[getAccountIdes](#getAccountIdes) | Returns a list of Cloud IDEs associated with the current user.
 [getAccountInvites](#getAccountInvites) | Gets a list of all organization admin and team invites that are pending for the current user.
 [getAccountMessages](#getAccountMessages) | Returns a list of messages associated with the current user.
 [getAccountOrganizationIsAdministrator](#getAccountOrganizationIsAdministrator) | Returns whether your account is an administrator for an organization.
@@ -39,23 +40,32 @@ Function | Summary
 [getArtifactsByApplicationUuid](#getArtifactsByApplicationUuid) | Return application artifacts.
 [getArtifactByApplicationUuidAndId](#getArtifactByApplicationUuidAndId) | Return details about a specific artifact.
 [getCodeByApplicationUuid](#getCodeByApplicationUuid) | Return application branches and release tags.
+[getCodeStudioProject](#getCodeStudioProject) | Returns details about the Code Studio project for an application.
+[postCodeStudioProject](#postCodeStudioProject) | Creates the Code Studio project for an application.
+[deleteCodeStudioProject](#deleteCodeStudioProject) | Removes the Code Studio project from an application.
 [getApplicationDatabases](#getApplicationDatabases) | Returns a list database names for the application.
 [postApplicationDatabaseCreate](#postApplicationDatabaseCreate) | Creates a database.
 [postApplicationDatabaseDelete](#postApplicationDatabaseDelete) | Drops (deletes) a database.
 [postApplicationDatabaseErase](#postApplicationDatabaseErase) | Erases (truncates) a database.
-[getApplicationIdes](#getApplicationIdes) | Returns a list of Remote IDEs associated with this application.
-[postApplicationsIde](#postApplicationsIde) | Creates a new Remote IDE.
+[getApplicationEmailDomains](#getApplicationEmailDomains) | Returns a list of email domains associated with the application.
+[postApplicationAssociateEmailDomain](#postApplicationAssociateEmailDomain) | Associates an email domain with an Application.
+[postApplicationDisassociateEmailDomain](#postApplicationDisassociateEmailDomain) | Disassociates an email domain with an Application.
+[getApplicationIdes](#getApplicationIdes) | Returns a list of Cloud IDEs associated with this application.
+[postApplicationsIde](#postApplicationsIde) | Creates a new Cloud IDE.
 [getApplicationMessages](#getApplicationMessages) | Returns a list of messages associated with this application.
 [getApplicationNotifications](#getApplicationNotifications) | Returns a list of notifications associated with this application by its UUID.
 [getApplicationNotificationByUuid](#getApplicationNotificationByUuid) | Returns a single notification.
 [getApplicationPermissions](#getApplicationPermissions) | Returns a list of permissions the user has for this application by its UUID.
+[getApplicationSearchList](#getApplicationSearchList) | Returns a traversal endpoint for search entities for the application.
+[getApplicationSearchConfigurationSets](#getApplicationSearchConfigurationSets) | Returns a collection of search configuration sets for an application
+[postApplicationSearchConfigurationSets](#postApplicationSearchConfigurationSets) | Creates a search configuration set for an application.
+[getApplicationSearchConfigurationSet](#getApplicationSearchConfigurationSet) | Returns a search configuration set for an application
+[deleteApplicationSearchConfigurationSet](#deleteApplicationSearchConfigurationSet) | Removes and deletes a specific search configuration set from an application.
 [getApplicationSettings](#getApplicationSettings) | Returns available settings for this application.
 [getApplicationHostingSettings](#getApplicationHostingSettings) | Returns the hosting settings for this application.
 [getApplicationLegacyProductKeysSettings](#getApplicationLegacyProductKeysSettings) | Returns the legacy product keys for this application.
 [getApplicationRemoteAdministrationSettings](#getApplicationRemoteAdministrationSettings) | Returns the remote administration settings for this application.
 [putApplicationRemoteAdministrationSettings](#putApplicationRemoteAdministrationSettings) | Modifies the remote administration settings for an application.
-[getApplicationSearchSettings](#getApplicationSearchSettings) | Returns the search settings for this application.
-[putApplicationSearchSettings](#putApplicationSearchSettings) | Modifies the search settings for an application.
 [getApplicationSecuritySettings](#getApplicationSecuritySettings) | Returns the security policy settings for this application.
 [putApplicationSecuritySettings](#putApplicationSecuritySettings) | Modifies the security policy settings for an application.
 [getApplicationTags](#getApplicationTags) | Returns a list of application tags associated with this application.
@@ -63,10 +73,10 @@ Function | Summary
 [deleteApplicationTags](#deleteApplicationTags) | Deletes an application tag.
 [getApplicationTasks](#getApplicationTasks) | Returns a list of tasks associated with this application by its UUID.
 [getApplicationTeams](#getApplicationTeams) | Returns a list of teams associated with this application.
-[getApplicationsUsageLinks](#getApplicationsUsageLinks) | Retrieves traversal links for an application's usage data.
-[getApplicationsUsageData](#getApplicationsUsageData) | Retrieves aggregate usage data for an application.
-[getApplicationsUsageDataByEnvironment](#getApplicationsUsageDataByEnvironment) | Retrieves usage data for an application, broken down by environment.
-[getApplicationsUsageMetricData](#getApplicationsUsageMetricData) | Retrieves aggregate usage metric data for an application.
+[getApplicationsUsageLinks](#getApplicationsUsageLinks) | Retrieves traversal links for detailed metrics on usage (views and visits) of your application.
+[getApplicationsUsageData](#getApplicationsUsageData) | Retrieves aggregate usage data for an application, filterable by views or visits and by environment.
+[getApplicationsUsageDataByEnvironment](#getApplicationsUsageDataByEnvironment) | Retrieves usage data (views or visits) for an application, broken down by environment.
+[getApplicationsUsageMetricData](#getApplicationsUsageMetricData) | Retrieves aggregate usage metric data (views or visits) for an application..
 [getApplicationsUsageViewsDataByEnvironment](#getApplicationsUsageViewsDataByEnvironment) | Retrieves views data for an application, broken down by environment.
 [getApplicationsUsageVisitsDataByEnvironment](#getApplicationsUsageVisitsDataByEnvironment) | Retrieves visits data for an application, broken down by environment.
 [getDistributions](#getDistributions) | Return a list of Drupal distributions.
@@ -74,14 +84,24 @@ Function | Summary
 [getApplicationEnvironments](#getApplicationEnvironments) | Returns a list of environments within this application by its UUID.
 [postApplicationEnvironments](#postApplicationEnvironments) | Add a new continuous delivery environment to an application by the application UUID.
 [getApplicationFeatures](#getApplicationFeatures) | Return application features.
-[getInsightDataBySites](#getInsightDataBySites) | Returns Insight data for all sites associated with the application by its UUID.
 [getEnvironment](#getEnvironment) | Return details about a specific environment.
 [putEnvironment](#putEnvironment) | Modifies configuration settings for an environment.
 [deleteEnvironment](#deleteEnvironment) | Deletes a CD environment.
+[postEnvironmentsClearCaches](#postEnvironmentsClearCaches) | Clears the caches for one or more domains attached to this environment.
 [postChangeEnvironmentLabel](#postChangeEnvironmentLabel) | Change the label for an environment.
-[postResizeEnvironment](#postResizeEnvironment) | Resize an environment.
+[postMigrateEnvironment](#postMigrateEnvironment) | Create a Migrate Environment using the provided environment as its source.
+[postPromoteEnvironment](#postPromoteEnvironment) | Promote a Migrate Environment.
+[postRefreshEnvironment](#postRefreshEnvironment) | Refreshes a Migrate Environment.
 [postDeployArtifact](#postDeployArtifact) | Deploys an artifact to this environment.
 [getAvailableRuntimes](#getAvailableRuntimes) | Return a list of runtimes.
+[getCdnByEnvironmentId](#getCdnByEnvironmentId) | Returns the CDN status for an environment.
+[postCdnByEnvironmentId](#postCdnByEnvironmentId) | Enables a CDN for an environment.
+[deleteCdnByEnvironmentId](#deleteCdnByEnvironmentId) | Disables a CDN for an environment.
+[getEnvironmentCloudActions](#getEnvironmentCloudActions) | Returns a list of Cloud Actions.
+[putEnvironmentCloudActions](#putEnvironmentCloudActions) | Modifies an existing list of Cloud Actions.
+[postEnvironmentCloudActionsDisable](#postEnvironmentCloudActionsDisable) | Disables Cloud Actions.
+[postEnvironmentCloudActionsEnable](#postEnvironmentCloudActionsEnable) | Enables Cloud Actions.
+[postEnvironmentCloudActionsReset](#postEnvironmentCloudActionsReset) | Resets Cloud Actions.
 [postEnvironmentsDeployCode](#postEnvironmentsDeployCode) | Deploys code to this environment.
 [postEnvironmentsSwitchCode](#postEnvironmentsSwitchCode) | Switches code on this environment to a different branch or release tag.
 [postEnvironmentsImportSite](#postEnvironmentsImportSite) | Imports a site to this environment.
@@ -109,10 +129,13 @@ Function | Summary
 [getEnvironmentsDomain](#getEnvironmentsDomain) | Return details about a specific domain.
 [deleteEnvironmentsDomain](#deleteEnvironmentsDomain) | Removes the domain from this environment.
 [postEnvironmentsDomainClearVarnish](#postEnvironmentsDomainClearVarnish) | Clears the Varnish cache for the specified domain.
-[getEnvironmentsDomainsUptimeScans](#getEnvironmentsDomainsUptimeScans) | Retrieves Uptime scan data for a specific domain.
+[postEnvironmentsDomainClearCaches](#postEnvironmentsDomainClearCaches) | Clears the caches for the specified domain.
 [getEnvironmentsDomainStatus](#getEnvironmentsDomainStatus) | Returns details about the domain.
+[getEIPs](#getEIPs) | Return a list of Web EIPs.
+[getEmailStatus](#getEmailStatus) | Returns the status of Platform Email for an Environment.
+[postEnvironmentEmailDisable](#postEnvironmentEmailDisable) | Disables email for an environment.
+[postEnvironmentEmailEnable](#postEnvironmentEmailEnable) | Enables email for an environment.
 [postEnvironmentsFiles](#postEnvironmentsFiles) | Copies files to this environment.
-[getInsightForEnvironment](#getInsightForEnvironment) | Returns insight data.
 [getEnvironmentsLogs](#getEnvironmentsLogs) | Returns a list of log files for this environment available for download.
 [getEnvironmentsLog](#getEnvironmentsLog) | Downloads the log file.
 [postEnvironmentsLog](#postEnvironmentsLog) | Creates a log file snapshot.
@@ -129,12 +152,17 @@ Function | Summary
 [getEnvironmentsMetrics](#getEnvironmentsMetrics) | Does not return any data. Allows traversal to metrics groups endpoints.
 [getEnvironmentsStackMetrics](#getEnvironmentsStackMetrics) | Does not return any data. Allows traversal to StackMetrics endpoints.
 [getEnvironmentsStackMetricsData](#getEnvironmentsStackMetricsData) | Returns StackMetrics data for the metrics specified in the filter paramater (e.g., apache-access, web-cpu).
-[getEnvironmentsStackMetricsMetric](#getEnvironmentsStackMetricsMetric) | Returns StackMetrics data for the metric (e.g., apache-access).
 [getEnvironmentsUsageLinks](#getEnvironmentsUsageLinks) | Retrieves traversal links for an environment's usage data.
 [getEnvironmentsUsageData](#getEnvironmentsUsageData) | Retrieves usage data for an environment.
 [getEnvironmentsUsageMetricData](#getEnvironmentsUsageMetricData) | Retrieves usage metric data for an environment.
 [postEnvironmentsDisableProductionMode](#postEnvironmentsDisableProductionMode) | Disables production mode for an environment.
 [postEnvironmentsEnableProductionMode](#postEnvironmentsEnableProductionMode) | Enables production mode for an environment.
+[getEnvironmentSearchList](#getEnvironmentSearchList) | Returns a traversal endpoint for search entities for the environment.
+[getEnvironmentSearchIndexes](#getEnvironmentSearchIndexes) | Returns a collection of search indexes for an environment.
+[postEnvironmentSearchIndexes](#postEnvironmentSearchIndexes) | Creates a search index for an environment.
+[getEnvironmentSearchIndex](#getEnvironmentSearchIndex) | Returns a search configuration set for an application
+[putEnvironmentSearchIndex](#putEnvironmentSearchIndex) | Updates a search index on an environment.
+[deleteEnvironmentSearchIndex](#deleteEnvironmentSearchIndex) | Removes and deletes a specific search index from an environment
 [getEnvironmentsServers](#getEnvironmentsServers) | Returns a list of servers.
 [getEnvironmentsServer](#getEnvironmentsServer) | Return details about a specific server.
 [putEnvironmentsServer](#putEnvironmentsServer) | Modifies configuration settings for a server.
@@ -143,8 +171,8 @@ Function | Summary
 [postEnvironmentsServerSuspend](#postEnvironmentsServerSuspend) | Suspends a server.
 [postEnvironmentsServerUpgrade](#postEnvironmentsServerUpgrade) | Upgrades a server from "precise" to "xenial".
 [getEnvironmentsSettings](#getEnvironmentsSettings) | Provides links to environment settings.
-[getEnvironmentsApmSetting](#getEnvironmentsApmSetting) | Return details about a specific APM.
-[putEnvironmentsApmSetting](#putEnvironmentsApmSetting) | Update configuration for an APM tool.
+[getEnvironmentsApmSetting](#getEnvironmentsApmSetting) | Returns a list of Application Performance Monitoring services associated with the environment.
+[putEnvironmentsApmSetting](#putEnvironmentsApmSetting) | Update configuration for an Application Performance Monitoring tool.
 [getSsl](#getSsl) | Returns the SSL settings for this environment.
 [getCertificates](#getCertificates) | Return a list of SSL certificates.
 [postCertificate](#postCertificate) | Install an SSL certificate.
@@ -153,7 +181,7 @@ Function | Summary
 [postActivateCertificate](#postActivateCertificate) | Activates an SSL certificate.
 [postDeactivateCertificate](#postDeactivateCertificate) | Deactivates an active SSL certificate.
 [getCertificateSigningRequests](#getCertificateSigningRequests) | Returns certificate signing requests.
-[postCertificateSigningRequest](#postCertificateSigningRequest) | Generates a CSR for one or more domains.
+[postCertificateSigningRequest](#postCertificateSigningRequest) | Generates a certificate signing request (CSR) for one or more domains.
 [getCertificateSigningRequest](#getCertificateSigningRequest) | Returns the certificate signing request for the certificate specified by id.
 [deleteCertificateSigningRequest](#deleteCertificateSigningRequest) | Deletes the certificate signing request.
 [getEnvironmentsVariables](#getEnvironmentsVariables) | Returns a list of environment variables associated with this environment.
@@ -161,24 +189,14 @@ Function | Summary
 [getEnvironmentsVariable](#getEnvironmentsVariable) | Get an environment variable associated with this environment.
 [deleteEnvironmentsVariable](#deleteEnvironmentsVariable) | Removes an environment variable from an environment.
 [putEnvironmentsVariable](#putEnvironmentsVariable) | Updates an environment variable on an environment.
-[getIde](#getIde) | Returns Remote IDE info.
-[deleteIde](#deleteIde) | De-provisions a specific Remote IDE.
+[getIde](#getIde) | Returns Cloud IDE info.
+[deleteIde](#deleteIde) | De-provisions a specific Cloud IDE.
 [getIdentityProviders](#getIdentityProviders) | Returns a list of identity providers for a user.
 [getIdentityProvider](#getIdentityProvider) | Returns a specific identity provider by UUID.
 [putIdentityProvider](#putIdentityProvider) | Modifies an identity provider by its UUID.
 [deleteIdentityProvider](#deleteIdentityProvider) | Deletes a specific identity provider by its UUID.
 [postEnableIdentityProvider](#postEnableIdentityProvider) | Enables an identity provider by its UUID.
 [postDisableIdentityProvider](#postDisableIdentityProvider) | Disables an identity provider by its UUID.
-[findInsightDataBySiteId](#findInsightDataBySiteId) | Returns insight data for a particular site.
-[postRevokeInsight](#postRevokeInsight) | Revokes an Insight install so it can no longer submit data using the Acquia Connector module.
-[postUnrevokeInsight](#postUnrevokeInsight) | Un-revokes an Insight site so it can once again submit data using the Acquia Connector module. Note that the site must also be unblocked using the Acquia Connector module.
-[getFindInsightAlertsForSite](#getFindInsightAlertsForSite) | Returns a list of Insight alerts for this site.
-[getInsightByUuid](#getInsightByUuid) | Returns a specific Insight alert for this site.
-[postIgnoreInsightAlert](#postIgnoreInsightAlert) | Ignores an alert. An ignored alert will not be counted in the Insight score calculation.
-[postRestoreInsightAlert](#postRestoreInsightAlert) | Restores an alert. A restored alert will be included in the calculation of the Insight score.
-[getConnectionHistoryForSite](#getConnectionHistoryForSite) | Returns a list of historical Insight connections for this site.
-[getDrupalModulesForSite](#getDrupalModulesForSite) | Returns a list of Drupal modules for this site.
-[getScoreHistoryForSite](#getScoreHistoryForSite) | Returns a list of historical Insight scores for this site.
 [getInviteByToken](#getInviteByToken) | Returns details about an invitation.
 [postInviteCancel](#postInviteCancel) | Cancels an invitation.
 [postInviteAcceptByToken](#postInviteAcceptByToken) | Accepts an invite.
@@ -207,11 +225,14 @@ Function | Summary
 [postOrganizationAdminInvite](#postOrganizationAdminInvite) | Invites a user to be an administrator in this organization.
 [getOrganizationApplications](#getOrganizationApplications) | Returns a list of applications that belong to the organization.
 [getOrganizationAvailableTags](#getOrganizationAvailableTags) | Returns a list of all available application tags.
+[postOrganizationAvailableTags](#postOrganizationAvailableTags) | Adds bulk tags to organization resources.
+[deleteOrganizationAvailableTags](#deleteOrganizationAvailableTags) | Deletes bulk tags from organization resources.
 [getOrganizationIdentityProvider](#getOrganizationIdentityProvider) | Returns an identity provider for an organization.
 [getOrganizationMembers](#getOrganizationMembers) | Returns a list of all organization members.
 [getOrganizationMember](#getOrganizationMember) | Returns the user profile of this organization member.
 [postOrganizationMemberDelete](#postOrganizationMemberDelete) | Removes the member from the organization.
 [getOrganizationMemberApplications](#getOrganizationMemberApplications) | Returns a list of applications that an organization member has access to.
+[getOrganizationNotifications](#getOrganizationNotifications) | Returns a list of notifications associated with this organization by its UUID.
 [getOrganizationRoles](#getOrganizationRoles) | Returns a list of all the canonical roles within the organization.
 [postOrganizationRoles](#postOrganizationRoles) | Creates a role.
 [getOrganizationSubscriptions](#getOrganizationSubscriptions) | Returns a list of subscriptions that belong to the organization.
@@ -225,9 +246,25 @@ Function | Summary
 [getSubscriptions](#getSubscriptions) | Return a list of subscription.
 [getSubscription](#getSubscription) | Return details about a specific subscription.
 [putSubscription](#putSubscription) | Modifies a subscription.
+[getSubscriptionApmTypes](#getSubscriptionApmTypes) | Returns a list of Application Performance Monitoring services associated with the subscription.
+[getSubscriptionApmType](#getSubscriptionApmType) | Returns the Application Performance Monitoring service type associated with the subscription.
+[postSubscriptionApmOptIn](#postSubscriptionApmOptIn) | Enables New Relic Pro APM license for all applications on a subscription.
 [getSubscriptionApplications](#getSubscriptionApplications) | Provides a list of applications that are a part of the subscription.
+[getCodeStudioSubscriptionMetadata](#getCodeStudioSubscriptionMetadata) | Retrieves Code Studio metadata for a subscription.
+[optionsCodeStudio](#optionsCodeStudio) | Displays Code Studio options for a subscription.
+[postEnableCodeStudio](#postEnableCodeStudio) | Enables Code Studio for a subscription.
+[getCodeStudioApplications](#getCodeStudioApplications) | Retrieves a list of Code Studio enabled applications for a subscription.
+[getCodeStudioUsers](#getCodeStudioUsers) | Retrieves a list of users assigned to Code Studio for a subscription.
+[postCodeStudioUsers](#postCodeStudioUsers) | Assigns a user to a Code Studio seat for a subscription.
+[getCodeStudioUser](#getCodeStudioUser) | Retrieves details about a specific Code Studio user.
+[deleteCodeStudioUser](#deleteCodeStudioUser) | Unassigns a user from a Code Studio seat.
+[getSubscriptionDomainRegistrations](#getSubscriptionDomainRegistrations) | Returns a list of Domains registered with this subscription.
+[postSubscriptionDomainRegistration](#postSubscriptionDomainRegistration) | Registers a Domain with this subscription.
+[getSubscriptionDomainRegistration](#getSubscriptionDomainRegistration) | Returns a speicific Domain registered with this subscription.
+[deleteSubscriptionDomainRegistration](#deleteSubscriptionDomainRegistration) | Unregisters a Domain registered with this subscription.
+[postSubscriptionVerifyDomainRegistration](#postSubscriptionVerifyDomainRegistration) | Triggers re-verification and update to the domain verification status.
 [getSubscriptionEntitlements](#getSubscriptionEntitlements) | Provides a list of entitlements that are a part of the subscription.
-[getSubscriptionIdes](#getSubscriptionIdes) | Returns a list of Remote IDEs associated with this subscription.
+[getSubscriptionIdes](#getSubscriptionIdes) | Returns a list of Cloud IDEs associated with this subscription.
 [getSubscriptionsUsageLinks](#getSubscriptionsUsageLinks) | Retrieves traversal links for a subscription's usage data.
 [getSubscriptionsUsageData](#getSubscriptionsUsageData) | Retrieves aggregate usage data for a subscription.
 [getSubscriptionsUsageDataByApplication](#getSubscriptionsUsageDataByApplication) | Retrieves usage data for a subscription, broken down by application.
@@ -339,6 +376,14 @@ Returns the drush aliases as a compressed archive download.
 $response = $client->getAccountDrushAliasesDownload([
 	'DrushVersion' => $DrushVersion
 ]);
+```
+
+
+## getAccountIdes
+
+Returns a list of Cloud IDEs associated with the current user.
+```php
+$response = $client->getAccountIdes();
 ```
 
 
@@ -649,6 +694,36 @@ $response = $client->getCodeByApplicationUuid([
 ```
 
 
+## getCodeStudioProject
+
+Returns details about the Code Studio project for an application.
+```php
+$response = $client->getCodeStudioProject([
+	'ApplicationUuid' => $ApplicationUuid
+]);
+```
+
+
+## postCodeStudioProject
+
+Creates the Code Studio project for an application.
+```php
+$response = $client->postCodeStudioProject([
+	'ApplicationUuid' => $ApplicationUuid
+]);
+```
+
+
+## deleteCodeStudioProject
+
+Removes the Code Studio project from an application.
+```php
+$response = $client->deleteCodeStudioProject([
+	'ApplicationUuid' => $ApplicationUuid
+]);
+```
+
+
 ## getApplicationDatabases
 
 Returns a list database names for the application.
@@ -695,9 +770,45 @@ $response = $client->postApplicationDatabaseErase([
 ```
 
 
+## getApplicationEmailDomains
+
+Returns a list of email domains associated with the application.
+```php
+$response = $client->getApplicationEmailDomains([
+	'ApplicationUuid' => $ApplicationUuid,
+	'Sort' => $Sort,
+	'Filter' => $Filter,
+	'Limit' => $Limit,
+	'Offset' => $Offset
+]);
+```
+
+
+## postApplicationAssociateEmailDomain
+
+Associates an email domain with an Application.
+```php
+$response = $client->postApplicationAssociateEmailDomain([
+	'ApplicationUuid' => $ApplicationUuid,
+	'DomainRegistrationUuid' => $DomainRegistrationUuid
+]);
+```
+
+
+## postApplicationDisassociateEmailDomain
+
+Disassociates an email domain with an Application.
+```php
+$response = $client->postApplicationDisassociateEmailDomain([
+	'ApplicationUuid' => $ApplicationUuid,
+	'DomainRegistrationUuid' => $DomainRegistrationUuid
+]);
+```
+
+
 ## getApplicationIdes
 
-Returns a list of Remote IDEs associated with this application.
+Returns a list of Cloud IDEs associated with this application.
 ```php
 $response = $client->getApplicationIdes([
 	'ApplicationUuid' => $ApplicationUuid
@@ -707,7 +818,7 @@ $response = $client->getApplicationIdes([
 
 ## postApplicationsIde
 
-Creates a new Remote IDE.
+Creates a new Cloud IDE.
 ```php
 $response = $client->postApplicationsIde([
 	'ApplicationUuid' => $ApplicationUuid
@@ -766,6 +877,58 @@ $response = $client->getApplicationPermissions([
 ```
 
 
+## getApplicationSearchList
+
+Returns a traversal endpoint for search entities for the application.
+```php
+$response = $client->getApplicationSearchList([
+	'ApplicationUuid' => $ApplicationUuid
+]);
+```
+
+
+## getApplicationSearchConfigurationSets
+
+Returns a collection of search configuration sets for an application
+```php
+$response = $client->getApplicationSearchConfigurationSets([
+	'ApplicationUuid' => $ApplicationUuid
+]);
+```
+
+
+## postApplicationSearchConfigurationSets
+
+Creates a search configuration set for an application.
+```php
+$response = $client->postApplicationSearchConfigurationSets([
+	'ApplicationUuid' => $ApplicationUuid
+]);
+```
+
+
+## getApplicationSearchConfigurationSet
+
+Returns a search configuration set for an application
+```php
+$response = $client->getApplicationSearchConfigurationSet([
+	'ApplicationUuid' => $ApplicationUuid,
+	'ConfigurationSetId' => $ConfigurationSetId
+]);
+```
+
+
+## deleteApplicationSearchConfigurationSet
+
+Removes and deletes a specific search configuration set from an application.
+```php
+$response = $client->deleteApplicationSearchConfigurationSet([
+	'ApplicationUuid' => $ApplicationUuid,
+	'ConfigurationSetId' => $ConfigurationSetId
+]);
+```
+
+
 ## getApplicationSettings
 
 Returns available settings for this application.
@@ -811,26 +974,6 @@ $response = $client->getApplicationRemoteAdministrationSettings([
 Modifies the remote administration settings for an application.
 ```php
 $response = $client->putApplicationRemoteAdministrationSettings([
-	'ApplicationUuid' => $ApplicationUuid
-]);
-```
-
-
-## getApplicationSearchSettings
-
-Returns the search settings for this application.
-```php
-$response = $client->getApplicationSearchSettings([
-	'ApplicationUuid' => $ApplicationUuid
-]);
-```
-
-
-## putApplicationSearchSettings
-
-Modifies the search settings for an application.
-```php
-$response = $client->putApplicationSearchSettings([
 	'ApplicationUuid' => $ApplicationUuid
 ]);
 ```
@@ -919,7 +1062,7 @@ $response = $client->getApplicationTeams([
 
 ## getApplicationsUsageLinks
 
-Retrieves traversal links for an application's usage data.
+Retrieves traversal links for detailed metrics on usage (views and visits) of your application.
 ```php
 $response = $client->getApplicationsUsageLinks([
 	'ApplicationUuid' => $ApplicationUuid
@@ -929,7 +1072,7 @@ $response = $client->getApplicationsUsageLinks([
 
 ## getApplicationsUsageData
 
-Retrieves aggregate usage data for an application.
+Retrieves aggregate usage data for an application, filterable by views or visits and by environment.
 ```php
 $response = $client->getApplicationsUsageData([
 	'ApplicationUuid' => $ApplicationUuid,
@@ -943,7 +1086,7 @@ $response = $client->getApplicationsUsageData([
 
 ## getApplicationsUsageDataByEnvironment
 
-Retrieves usage data for an application, broken down by environment.
+Retrieves usage data (views or visits) for an application, broken down by environment.
 ```php
 $response = $client->getApplicationsUsageDataByEnvironment([
 	'ApplicationUuid' => $ApplicationUuid,
@@ -957,7 +1100,7 @@ $response = $client->getApplicationsUsageDataByEnvironment([
 
 ## getApplicationsUsageMetricData
 
-Retrieves aggregate usage metric data for an application.
+Retrieves aggregate usage metric data (views or visits) for an application..
 ```php
 $response = $client->getApplicationsUsageMetricData([
 	'UsageMetric' => $UsageMetric,
@@ -1048,20 +1191,6 @@ $response = $client->getApplicationFeatures([
 ```
 
 
-## getInsightDataBySites
-
-Returns Insight data for all sites associated with the application by its UUID.
-```php
-$response = $client->getInsightDataBySites([
-	'ApplicationUuid' => $ApplicationUuid,
-	'Sort' => $Sort,
-	'Filter' => $Filter,
-	'Limit' => $Limit,
-	'Offset' => $Offset
-]);
-```
-
-
 ## getEnvironment
 
 Return details about a specific environment.
@@ -1092,6 +1221,16 @@ $response = $client->deleteEnvironment([
 ```
 
 
+## postEnvironmentsClearCaches
+
+Clears the caches for one or more domains attached to this environment.
+```php
+$response = $client->postEnvironmentsClearCaches([
+	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
 ## postChangeEnvironmentLabel
 
 Change the label for an environment.
@@ -1102,11 +1241,31 @@ $response = $client->postChangeEnvironmentLabel([
 ```
 
 
-## postResizeEnvironment
+## postMigrateEnvironment
 
-Resize an environment.
+Create a Migrate Environment using the provided environment as its source.
 ```php
-$response = $client->postResizeEnvironment([
+$response = $client->postMigrateEnvironment([
+	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
+## postPromoteEnvironment
+
+Promote a Migrate Environment.
+```php
+$response = $client->postPromoteEnvironment([
+	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
+## postRefreshEnvironment
+
+Refreshes a Migrate Environment.
+```php
+$response = $client->postRefreshEnvironment([
 	'EnvironmentId' => $EnvironmentId
 ]);
 ```
@@ -1127,6 +1286,86 @@ $response = $client->postDeployArtifact([
 Return a list of runtimes.
 ```php
 $response = $client->getAvailableRuntimes([
+	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
+## getCdnByEnvironmentId
+
+Returns the CDN status for an environment.
+```php
+$response = $client->getCdnByEnvironmentId([
+	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
+## postCdnByEnvironmentId
+
+Enables a CDN for an environment.
+```php
+$response = $client->postCdnByEnvironmentId([
+	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
+## deleteCdnByEnvironmentId
+
+Disables a CDN for an environment.
+```php
+$response = $client->deleteCdnByEnvironmentId([
+	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
+## getEnvironmentCloudActions
+
+Returns a list of Cloud Actions.
+```php
+$response = $client->getEnvironmentCloudActions([
+	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
+## putEnvironmentCloudActions
+
+Modifies an existing list of Cloud Actions.
+```php
+$response = $client->putEnvironmentCloudActions([
+	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
+## postEnvironmentCloudActionsDisable
+
+Disables Cloud Actions.
+```php
+$response = $client->postEnvironmentCloudActionsDisable([
+	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
+## postEnvironmentCloudActionsEnable
+
+Enables Cloud Actions.
+```php
+$response = $client->postEnvironmentCloudActionsEnable([
+	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
+## postEnvironmentCloudActionsReset
+
+Resets Cloud Actions.
+```php
+$response = $client->postEnvironmentCloudActionsReset([
 	'EnvironmentId' => $EnvironmentId
 ]);
 ```
@@ -1290,8 +1529,8 @@ Returns a list of backups.
 $response = $client->getEnvironmentsDatabaseBackups([
 	'EnvironmentId' => $EnvironmentId,
 	'DatabaseName' => $DatabaseName,
-	'From' => $From,
-	'To' => $To,
+	'DeprecatedFrom' => $DeprecatedFrom,
+	'DeprecatedTo' => $DeprecatedTo,
 	'Sort' => $Sort,
 	'Filter' => $Filter,
 	'Limit' => $Limit,
@@ -1436,15 +1675,13 @@ $response = $client->postEnvironmentsDomainClearVarnish([
 ```
 
 
-## getEnvironmentsDomainsUptimeScans
+## postEnvironmentsDomainClearCaches
 
-Retrieves Uptime scan data for a specific domain.
+Clears the caches for the specified domain.
 ```php
-$response = $client->getEnvironmentsDomainsUptimeScans([
+$response = $client->postEnvironmentsDomainClearCaches([
 	'EnvironmentId' => $EnvironmentId,
-	'Domain' => $Domain,
-	'From' => $From,
-	'To' => $To
+	'Domain' => $Domain
 ]);
 ```
 
@@ -1460,28 +1697,52 @@ $response = $client->getEnvironmentsDomainStatus([
 ```
 
 
+## getEIPs
+
+Return a list of Web EIPs.
+```php
+$response = $client->getEIPs([
+	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
+## getEmailStatus
+
+Returns the status of Platform Email for an Environment.
+```php
+$response = $client->getEmailStatus([
+	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
+## postEnvironmentEmailDisable
+
+Disables email for an environment.
+```php
+$response = $client->postEnvironmentEmailDisable([
+	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
+## postEnvironmentEmailEnable
+
+Enables email for an environment.
+```php
+$response = $client->postEnvironmentEmailEnable([
+	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
 ## postEnvironmentsFiles
 
 Copies files to this environment.
 ```php
 $response = $client->postEnvironmentsFiles([
 	'EnvironmentId' => $EnvironmentId
-]);
-```
-
-
-## getInsightForEnvironment
-
-Returns insight data.
-```php
-$response = $client->getInsightForEnvironment([
-	'EnvironmentId' => $EnvironmentId,
-	'From' => $From,
-	'To' => $To,
-	'Sort' => $Sort,
-	'Filter' => $Filter,
-	'Limit' => $Limit,
-	'Offset' => $Offset
 ]);
 ```
 
@@ -1653,19 +1914,10 @@ Returns StackMetrics data for the metrics specified in the filter paramater (e.g
 ```php
 $response = $client->getEnvironmentsStackMetricsData([
 	'EnvironmentId' => $EnvironmentId,
-	'StackMetricsMetricTypes' => $StackMetricsMetricTypes
-]);
-```
-
-
-## getEnvironmentsStackMetricsMetric
-
-Returns StackMetrics data for the metric (e.g., apache-access).
-```php
-$response = $client->getEnvironmentsStackMetricsMetric([
-	'EnvironmentId' => $EnvironmentId,
-	'StackMetricsMetricType' => $StackMetricsMetricType,
-	'ServerType' => $ServerType
+	'FilterStackMetrics' => $FilterStackMetrics,
+	'FromStackMetrics' => $FromStackMetrics,
+	'ToNoDefault' => $ToNoDefault,
+	'Resolution' => $Resolution
 ]);
 ```
 
@@ -1723,6 +1975,69 @@ Enables production mode for an environment.
 ```php
 $response = $client->postEnvironmentsEnableProductionMode([
 	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
+## getEnvironmentSearchList
+
+Returns a traversal endpoint for search entities for the environment.
+```php
+$response = $client->getEnvironmentSearchList([
+	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
+## getEnvironmentSearchIndexes
+
+Returns a collection of search indexes for an environment.
+```php
+$response = $client->getEnvironmentSearchIndexes([
+	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
+## postEnvironmentSearchIndexes
+
+Creates a search index for an environment.
+```php
+$response = $client->postEnvironmentSearchIndexes([
+	'EnvironmentId' => $EnvironmentId
+]);
+```
+
+
+## getEnvironmentSearchIndex
+
+Returns a search configuration set for an application
+```php
+$response = $client->getEnvironmentSearchIndex([
+	'EnvironmentId' => $EnvironmentId,
+	'IndexId' => $IndexId
+]);
+```
+
+
+## putEnvironmentSearchIndex
+
+Updates a search index on an environment.
+```php
+$response = $client->putEnvironmentSearchIndex([
+	'EnvironmentId' => $EnvironmentId,
+	'IndexId' => $IndexId
+]);
+```
+
+
+## deleteEnvironmentSearchIndex
+
+Removes and deletes a specific search index from an environment
+```php
+$response = $client->deleteEnvironmentSearchIndex([
+	'EnvironmentId' => $EnvironmentId,
+	'IndexId' => $IndexId
 ]);
 ```
 
@@ -1819,7 +2134,7 @@ $response = $client->getEnvironmentsSettings([
 
 ## getEnvironmentsApmSetting
 
-Return details about a specific APM.
+Returns a list of Application Performance Monitoring services associated with the environment.
 ```php
 $response = $client->getEnvironmentsApmSetting([
 	'EnvironmentId' => $EnvironmentId
@@ -1829,7 +2144,7 @@ $response = $client->getEnvironmentsApmSetting([
 
 ## putEnvironmentsApmSetting
 
-Update configuration for an APM tool.
+Update configuration for an Application Performance Monitoring tool.
 ```php
 $response = $client->putEnvironmentsApmSetting([
 	'EnvironmentId' => $EnvironmentId
@@ -1923,7 +2238,7 @@ $response = $client->getCertificateSigningRequests([
 
 ## postCertificateSigningRequest
 
-Generates a CSR for one or more domains.
+Generates a certificate signing request (CSR) for one or more domains.
 ```php
 $response = $client->postCertificateSigningRequest([
 	'EnvironmentId' => $EnvironmentId
@@ -2012,7 +2327,7 @@ $response = $client->putEnvironmentsVariable([
 
 ## getIde
 
-Returns Remote IDE info.
+Returns Cloud IDE info.
 ```php
 $response = $client->getIde([
 	'IdeUuid' => $IdeUuid
@@ -2022,7 +2337,7 @@ $response = $client->getIde([
 
 ## deleteIde
 
-De-provisions a specific Remote IDE.
+De-provisions a specific Cloud IDE.
 ```php
 $response = $client->deleteIde([
 	'IdeUuid' => $IdeUuid
@@ -2089,127 +2404,6 @@ Disables an identity provider by its UUID.
 ```php
 $response = $client->postDisableIdentityProvider([
 	'IdentityProviderUuid' => $IdentityProviderUuid
-]);
-```
-
-
-## findInsightDataBySiteId
-
-Returns insight data for a particular site.
-```php
-$response = $client->findInsightDataBySiteId([
-	'SiteId' => $SiteId
-]);
-```
-
-
-## postRevokeInsight
-
-Revokes an Insight install so it can no longer submit data using the Acquia Connector module.
-```php
-$response = $client->postRevokeInsight([
-	'SiteId' => $SiteId
-]);
-```
-
-
-## postUnrevokeInsight
-
-Un-revokes an Insight site so it can once again submit data using the Acquia Connector module. Note that the site must also be unblocked using the Acquia Connector module.
-```php
-$response = $client->postUnrevokeInsight([
-	'SiteId' => $SiteId
-]);
-```
-
-
-## getFindInsightAlertsForSite
-
-Returns a list of Insight alerts for this site.
-```php
-$response = $client->getFindInsightAlertsForSite([
-	'SiteId' => $SiteId,
-	'Sort' => $Sort,
-	'Filter' => $Filter,
-	'Limit' => $Limit,
-	'Offset' => $Offset
-]);
-```
-
-
-## getInsightByUuid
-
-Returns a specific Insight alert for this site.
-```php
-$response = $client->getInsightByUuid([
-	'SiteId' => $SiteId,
-	'AlertUuid' => $AlertUuid
-]);
-```
-
-
-## postIgnoreInsightAlert
-
-Ignores an alert. An ignored alert will not be counted in the Insight score calculation.
-```php
-$response = $client->postIgnoreInsightAlert([
-	'SiteId' => $SiteId,
-	'AlertUuid' => $AlertUuid
-]);
-```
-
-
-## postRestoreInsightAlert
-
-Restores an alert. A restored alert will be included in the calculation of the Insight score.
-```php
-$response = $client->postRestoreInsightAlert([
-	'SiteId' => $SiteId,
-	'AlertUuid' => $AlertUuid
-]);
-```
-
-
-## getConnectionHistoryForSite
-
-Returns a list of historical Insight connections for this site.
-```php
-$response = $client->getConnectionHistoryForSite([
-	'SiteId' => $SiteId,
-	'Sort' => $Sort,
-	'Filter' => $Filter,
-	'Limit' => $Limit,
-	'Offset' => $Offset
-]);
-```
-
-
-## getDrupalModulesForSite
-
-Returns a list of Drupal modules for this site.
-```php
-$response = $client->getDrupalModulesForSite([
-	'SiteId' => $SiteId,
-	'Sort' => $Sort,
-	'Filter' => $Filter,
-	'Limit' => $Limit,
-	'Offset' => $Offset
-]);
-```
-
-
-## getScoreHistoryForSite
-
-Returns a list of historical Insight scores for this site.
-```php
-$response = $client->getScoreHistoryForSite([
-	'SiteId' => $SiteId,
-	'Sort' => $Sort,
-	'Filter' => $Filter,
-	'Limit' => $Limit,
-	'Offset' => $Offset,
-	'From' => $From,
-	'To' => $To
 ]);
 ```
 
@@ -2493,6 +2687,26 @@ $response = $client->getOrganizationAvailableTags([
 ```
 
 
+## postOrganizationAvailableTags
+
+Adds bulk tags to organization resources.
+```php
+$response = $client->postOrganizationAvailableTags([
+	'OrganizationUuid' => $OrganizationUuid
+]);
+```
+
+
+## deleteOrganizationAvailableTags
+
+Deletes bulk tags from organization resources.
+```php
+$response = $client->deleteOrganizationAvailableTags([
+	'OrganizationUuid' => $OrganizationUuid
+]);
+```
+
+
 ## getOrganizationIdentityProvider
 
 Returns an identity provider for an organization.
@@ -2545,6 +2759,20 @@ Returns a list of applications that an organization member has access to.
 $response = $client->getOrganizationMemberApplications([
 	'OrganizationUuid' => $OrganizationUuid,
 	'UserUuid' => $UserUuid
+]);
+```
+
+
+## getOrganizationNotifications
+
+Returns a list of notifications associated with this organization by its UUID.
+```php
+$response = $client->getOrganizationNotifications([
+	'OrganizationUuid' => $OrganizationUuid,
+	'Sort' => $Sort,
+	'Filter' => $Filter,
+	'Limit' => $Limit,
+	'Offset' => $Offset
 ]);
 ```
 
@@ -2700,6 +2928,38 @@ $response = $client->putSubscription([
 ```
 
 
+## getSubscriptionApmTypes
+
+Returns a list of Application Performance Monitoring services associated with the subscription.
+```php
+$response = $client->getSubscriptionApmTypes([
+	'SubscriptionUuid' => $SubscriptionUuid
+]);
+```
+
+
+## getSubscriptionApmType
+
+Returns the Application Performance Monitoring service type associated with the subscription.
+```php
+$response = $client->getSubscriptionApmType([
+	'SubscriptionUuid' => $SubscriptionUuid,
+	'ApmType' => $ApmType
+]);
+```
+
+
+## postSubscriptionApmOptIn
+
+Enables New Relic Pro APM license for all applications on a subscription.
+```php
+$response = $client->postSubscriptionApmOptIn([
+	'SubscriptionUuid' => $SubscriptionUuid,
+	'ApmType' => $ApmType
+]);
+```
+
+
 ## getSubscriptionApplications
 
 Provides a list of applications that are a part of the subscription.
@@ -2710,6 +2970,145 @@ $response = $client->getSubscriptionApplications([
 	'Filter' => $Filter,
 	'Limit' => $Limit,
 	'Offset' => $Offset
+]);
+```
+
+
+## getCodeStudioSubscriptionMetadata
+
+Retrieves Code Studio metadata for a subscription.
+```php
+$response = $client->getCodeStudioSubscriptionMetadata([
+	'SubscriptionUuid' => $SubscriptionUuid
+]);
+```
+
+
+## optionsCodeStudio
+
+Displays Code Studio options for a subscription.
+```php
+$response = $client->optionsCodeStudio([
+	'SubscriptionUuid' => $SubscriptionUuid
+]);
+```
+
+
+## postEnableCodeStudio
+
+Enables Code Studio for a subscription.
+```php
+$response = $client->postEnableCodeStudio([
+	'SubscriptionUuid' => $SubscriptionUuid
+]);
+```
+
+
+## getCodeStudioApplications
+
+Retrieves a list of Code Studio enabled applications for a subscription.
+```php
+$response = $client->getCodeStudioApplications([
+	'SubscriptionUuid' => $SubscriptionUuid
+]);
+```
+
+
+## getCodeStudioUsers
+
+Retrieves a list of users assigned to Code Studio for a subscription.
+```php
+$response = $client->getCodeStudioUsers([
+	'SubscriptionUuid' => $SubscriptionUuid
+]);
+```
+
+
+## postCodeStudioUsers
+
+Assigns a user to a Code Studio seat for a subscription.
+```php
+$response = $client->postCodeStudioUsers([
+	'SubscriptionUuid' => $SubscriptionUuid
+]);
+```
+
+
+## getCodeStudioUser
+
+Retrieves details about a specific Code Studio user.
+```php
+$response = $client->getCodeStudioUser([
+	'SubscriptionUuid' => $SubscriptionUuid,
+	'UserUuid' => $UserUuid
+]);
+```
+
+
+## deleteCodeStudioUser
+
+Unassigns a user from a Code Studio seat.
+```php
+$response = $client->deleteCodeStudioUser([
+	'SubscriptionUuid' => $SubscriptionUuid,
+	'UserUuid' => $UserUuid
+]);
+```
+
+
+## getSubscriptionDomainRegistrations
+
+Returns a list of Domains registered with this subscription.
+```php
+$response = $client->getSubscriptionDomainRegistrations([
+	'SubscriptionUuid' => $SubscriptionUuid,
+	'Sort' => $Sort,
+	'Filter' => $Filter,
+	'Limit' => $Limit,
+	'Offset' => $Offset
+]);
+```
+
+
+## postSubscriptionDomainRegistration
+
+Registers a Domain with this subscription.
+```php
+$response = $client->postSubscriptionDomainRegistration([
+	'SubscriptionUuid' => $SubscriptionUuid
+]);
+```
+
+
+## getSubscriptionDomainRegistration
+
+Returns a speicific Domain registered with this subscription.
+```php
+$response = $client->getSubscriptionDomainRegistration([
+	'SubscriptionUuid' => $SubscriptionUuid,
+	'DomainRegistrationUuid' => $DomainRegistrationUuid
+]);
+```
+
+
+## deleteSubscriptionDomainRegistration
+
+Unregisters a Domain registered with this subscription.
+```php
+$response = $client->deleteSubscriptionDomainRegistration([
+	'SubscriptionUuid' => $SubscriptionUuid,
+	'DomainRegistrationUuid' => $DomainRegistrationUuid
+]);
+```
+
+
+## postSubscriptionVerifyDomainRegistration
+
+Triggers re-verification and update to the domain verification status.
+```php
+$response = $client->postSubscriptionVerifyDomainRegistration([
+	'SubscriptionUuid' => $SubscriptionUuid,
+	'DomainRegistrationUuid' => $DomainRegistrationUuid
 ]);
 ```
 
@@ -2726,7 +3125,7 @@ $response = $client->getSubscriptionEntitlements([
 
 ## getSubscriptionIdes
 
-Returns a list of Remote IDEs associated with this subscription.
+Returns a list of Cloud IDEs associated with this subscription.
 ```php
 $response = $client->getSubscriptionIdes([
 	'SubscriptionUuid' => $SubscriptionUuid
@@ -2750,8 +3149,6 @@ Retrieves aggregate usage data for a subscription.
 ```php
 $response = $client->getSubscriptionsUsageData([
 	'SubscriptionUuid' => $SubscriptionUuid,
-	'From' => $From,
-	'To' => $To,
 	'Filter' => $Filter,
 	'Resolution' => $Resolution
 ]);
@@ -2873,8 +3270,7 @@ $response = $client->deleteShieldAcl([
 Resets Shield ACL rules to default settings.
 ```php
 $response = $client->postResetShieldAcl([
-	'SubscriptionUuid' => $SubscriptionUuid,
-	'ShieldAclUuid' => $ShieldAclUuid
+	'SubscriptionUuid' => $SubscriptionUuid
 ]);
 ```
 
