@@ -93,7 +93,13 @@ class AcquiaCloudApi {
       }
     }
 
-    $request_options = ['query' => $valid_parameters];
+    $request_options = [];
+    // Add query parameters to $this->query
+    if (!empty($valid_parameters)) {
+      foreach ($valid_parameters as $name => $value) {
+        $this->client->addQuery($name, $value);
+      }
+    }
 
     if ($this->operations[$method]->method == 'POST' && !empty($arg[1])) {
       $request_options['json'] = $arg[1];
